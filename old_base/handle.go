@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"runtime"
 
-	"samh_common_lib/utils/log"
+	"github.com/ufwfqpdgv/samh_common_lib/utils/log"
 
 	"github.com/gin-gonic/gin"
 )

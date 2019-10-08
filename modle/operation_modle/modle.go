@@ -1,7 +1,7 @@
 package operation_modle
 
 import (
-	. "samh_common_lib/modle/common_modle"
+	. "github.com/ufwfqpdgv/samh_common_lib/modle/common_modle"
 
 	"github.com/ufwfqpdgv/samh_common_lib/base"
 )

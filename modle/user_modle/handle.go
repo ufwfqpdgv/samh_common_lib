@@ -1,9 +1,11 @@
 package user_modle
 
 import (
-	"samh_common_lib/utils"
-	"samh_common_lib/utils/log"
 	"strconv"
+
+	"github.com/ufwfqpdgv/samh_common_lib/utils/log"
+
+	"github.com/ufwfqpdgv/samh_common_lib/utils"
 
 	"github.com/ufwfqpdgv/samh_common_lib/base"
 )

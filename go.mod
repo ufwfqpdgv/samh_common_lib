@@ -1,4 +1,4 @@
-module samh_common_lib
+module github.com/ufwfqpdgv/samh_common_lib
 
 go 1.12
 
@@ -23,6 +23,7 @@ require (
 	github.com/json-iterator/go v1.1.6
 	github.com/pkg/errors v0.8.1
 	github.com/tealeg/xlsx v1.0.3 // indirect
+	github.com/viant/afs v0.3.0 // indirect
 	github.com/viant/toolbox v0.28.0
 	github.com/xormplus/builder v0.0.0-20190724032102-0ee351fedce9 // indirect
 	github.com/xormplus/core v0.0.0-20190724072625-00f5a85ad6e0
@@ -30,6 +31,7 @@ require (
 	go.uber.org/atomic v1.4.0 // indirect
 	go.uber.org/multierr v1.2.0 // indirect
 	go.uber.org/zap v1.10.0
+	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45 // indirect
 	gopkg.in/flosch/pongo2.v3 v3.0.0-20141028000813-5e81b817a0c4 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0
 	gopkg.in/resty.v1 v1.12.0

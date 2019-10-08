@@ -1,8 +1,9 @@
 package handle
 
 import (
-	"samh_common_lib/modle/user_modle"
-	"samh_common_lib/utils/log"
+	"github.com/ufwfqpdgv/samh_common_lib/utils/log"
+
+	"github.com/ufwfqpdgv/samh_common_lib/modle/user_modle"
 
 	"github.com/ufwfqpdgv/samh_common_lib/base"
 

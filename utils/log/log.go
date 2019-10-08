@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	"samh_common_lib/utils/config"
+	"github.com/ufwfqpdgv/samh_common_lib/utils/config"
 
 	"github.com/davecgh/go-spew/spew"
 	"go.uber.org/zap"
