@@ -1,10 +1,4 @@
-package vip_modle
-
-import (
-	. "github.com/ufwfqpdgv/samh_common_lib/modle/common_modle"
-
-	"github.com/ufwfqpdgv/samh_common_lib/base"
-)
+package samh_common_lib
 
 var (
 	url     string
@@ -32,7 +26,7 @@ type InternalUserPrivilegeInfoResponse struct {
 }
 
 type VipRewardRequest struct {
-	base.SamhBaseRequest
+	SamhBaseRequest
 	RewardRule   *RewardRule `form:"reward_rule" json:"reward_rule"`
 	ActivityId   int64       `form:"activity_id" json:"activity_id"`
 	RewardRuleId int64       `form:"reward_rule_id" json:"reward_rule_id"`
@@ -42,7 +36,7 @@ type VipRewardResponse struct {
 }
 
 type InternalRechargeRequest struct {
-	base.SamhBaseRequest
+	SamhBaseRequest
 	ActivityId    int64       `form:"activity_id" json:"activity_id"`
 	RewardRuleId  int64       `form:"reward_rule_id" json:"reward_rule_id"`
 	VipComboId    int64       `form:"vip_combo_id" json:"vip_combo_id"`

@@ -1,4 +1,4 @@
-package common_modle
+package samh_common_lib
 
 type VipLevelCode int
 

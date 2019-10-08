@@ -1,4 +1,4 @@
-package base
+package samh_common_lib
 
 import (
 	"fmt"

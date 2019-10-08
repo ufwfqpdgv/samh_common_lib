@@ -1,4 +1,4 @@
-package common_modle
+package samh_common_lib
 
 type VipPrivilege struct {
 	AdditionalCollectionExpansion  int          `json:"additional_collection_expansion" xorm:"default 0 comment('收藏额外扩充，多少部漫画，-1表无限制') INT(11)"`

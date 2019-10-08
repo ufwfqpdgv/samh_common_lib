@@ -1,4 +1,4 @@
-package utils
+package samh_common_lib
 
 import (
 	"bytes"
@@ -8,10 +8,6 @@ import (
 	"net/http"
 	"strings"
 	"time"
-
-	"github.com/ufwfqpdgv/samh_common_lib/utils/log"
-
-	"github.com/ufwfqpdgv/samh_common_lib/base"
 
 	resty "gopkg.in/resty.v1"
 )
@@ -71,20 +67,20 @@ func getClient(url string) (key string) {
 	return
 }
 
-func HttpGet(url string, rq interface{}, rsp interface{}, timeout int, headers map[string]string, retryCount int) (retCode base.SamhResponseCode) {
-	log.Debug(base.NowFunc())
-	defer log.Debug(base.NowFunc() + " end")
+func HttpGet(url string, rq interface{}, rsp interface{}, timeout int, headers map[string]string, retryCount int) (retCode SamhResponseCode) {
+	Debug(NowFunc())
+	defer Debug(NowFunc() + " end")
 
-	log.Infof("GET,Url:%v,Request:%+v", url, rq)
-	retCode = base.SamhResponseCode_Succ
+	Infof("GET,Url:%v,Request:%+v", url, rq)
+	retCode = SamhResponseCode_Succ
 	var (
 		err error
 	)
 
 	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		retCode = base.SamhResponseCode_ServerError
-		log.Error(err)
+		retCode = SamhResponseCode_ServerError
+		Error(err)
 		return
 	}
 	for k, v := range headers {
@@ -101,8 +97,8 @@ func HttpGet(url string, rq interface{}, rsp interface{}, timeout int, headers m
 
 	response, err := clientMap[getClient(url)].Do(request)
 	if err != nil {
-		retCode = base.SamhResponseCode_ServerError
-		log.Error(err, response)
+		retCode = SamhResponseCode_ServerError
+		Error(err, response)
 		return
 	}
 	defer response.Body.Close()
@@ -110,42 +106,42 @@ func HttpGet(url string, rq interface{}, rsp interface{}, timeout int, headers m
 
 	responseBytes, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		retCode = base.SamhResponseCode_ServerError
-		log.Error(err)
+		retCode = SamhResponseCode_ServerError
+		Error(err)
 		return
 	}
 	err = Json.Unmarshal(responseBytes, rsp)
 	if err != nil {
-		retCode = base.SamhResponseCode_ServerError
-		log.Error(err)
+		retCode = SamhResponseCode_ServerError
+		Error(err)
 		return
 	}
 
-	log.Infof("Response:%+v", rsp)
+	Infof("Response:%+v", rsp)
 
 	return
 }
 
-func HttpPost(url string, rq interface{}, rsp interface{}, timeout int, headers map[string]string, retryCount int) (retCode base.SamhResponseCode) {
-	log.Debug(base.NowFunc())
-	defer log.Debug(base.NowFunc() + " end")
+func HttpPost(url string, rq interface{}, rsp interface{}, timeout int, headers map[string]string, retryCount int) (retCode SamhResponseCode) {
+	Debug(NowFunc())
+	defer Debug(NowFunc() + " end")
 
-	log.Infof("POST,Url:%v,Request:%+v", url, rq)
+	Infof("POST,Url:%v,Request:%+v", url, rq)
 	var (
 		err error
 	)
 
 	bytesData, err := json.Marshal(rq)
 	if err != nil {
-		retCode = base.SamhResponseCode_ServerError
-		log.Error(err)
+		retCode = SamhResponseCode_ServerError
+		Error(err)
 		return
 	}
 	reader := bytes.NewReader(bytesData)
 	request, err := http.NewRequest("POST", url, reader)
 	if err != nil {
-		retCode = base.SamhResponseCode_ServerError
-		log.Error(err)
+		retCode = SamhResponseCode_ServerError
+		Error(err)
 		return
 	}
 	for k, v := range headers {
@@ -156,8 +152,8 @@ func HttpPost(url string, rq interface{}, rsp interface{}, timeout int, headers 
 
 	response, err := clientMap[getClient(url)].Do(request)
 	if err != nil {
-		retCode = base.SamhResponseCode_ServerError
-		log.Error(err)
+		retCode = SamhResponseCode_ServerError
+		Error(err)
 		return
 	}
 	defer response.Body.Close()
@@ -165,18 +161,18 @@ func HttpPost(url string, rq interface{}, rsp interface{}, timeout int, headers 
 
 	responseBytes, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		retCode = base.SamhResponseCode_ServerError
-		log.Error(err)
+		retCode = SamhResponseCode_ServerError
+		Error(err)
 		return
 	}
 	err = Json.Unmarshal(responseBytes, rsp)
 	if err != nil {
-		retCode = base.SamhResponseCode_ServerError
-		log.Error(err)
+		retCode = SamhResponseCode_ServerError
+		Error(err)
 		return
 	}
 
-	log.Infof("Response:%+v", rsp)
+	Infof("Response:%+v", rsp)
 
 	return
 }
@@ -254,16 +250,16 @@ func HttpPost(url string, rq interface{}, rsp interface{}, timeout int, headers 
 } */
 
 //旧版本的只支持这样form的并把rq先转成json串的样式
-func HttpPost2(url string, rq interface{}, rsp interface{}, timeout int) (retCode base.SamhResponseCode) {
-	log.Debug(base.NowFunc())
-	defer log.Debug(base.NowFunc() + " end")
+func HttpPost2(url string, rq interface{}, rsp interface{}, timeout int) (retCode SamhResponseCode) {
+	Debug(NowFunc())
+	defer Debug(NowFunc() + " end")
 
-	log.Infof("POST2,Url:%v,Request:%+v", url, rq)
+	Infof("POST2,Url:%v,Request:%+v", url, rq)
 	resty.SetTimeout(time.Duration(timeout) * time.Second)
 	b, err := Json.Marshal(rq)
 	if err != nil {
-		log.Error(err.Error())
-		retCode = base.SamhResponseCode_Param_Invalid
+		Error(err.Error())
+		retCode = SamhResponseCode_Param_Invalid
 		return
 	}
 	resp, err := resty.R().
@@ -272,12 +268,12 @@ func HttpPost2(url string, rq interface{}, rsp interface{}, timeout int) (retCod
 		SetResult(rsp).
 		Post(url)
 	if err != nil {
-		retCode = base.SamhResponseCode_ServerError
-		log.Error(err, resp)
+		retCode = SamhResponseCode_ServerError
+		Error(err, resp)
 		return
 	}
-	retCode = base.SamhResponseCode_Succ
-	log.Infof("Response:%+v", rsp)
+	retCode = SamhResponseCode_Succ
+	Infof("Response:%+v", rsp)
 
 	return
 }

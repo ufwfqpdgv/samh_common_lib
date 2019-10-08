@@ -9,7 +9,7 @@ require (
 	github.com/agrison/go-tablib v0.0.0-20160310143025-4930582c22ee // indirect
 	github.com/agrison/mxj v0.0.0-20160310142625-1269f8afb3b4 // indirect
 	github.com/bndr/gotabulate v1.1.2 // indirect
-	github.com/davecgh/go-spew v1.1.1
+	github.com/davecgh/go-spew v1.1.0
 	github.com/deckarep/golang-set v1.7.1
 	github.com/elastic/go-elasticsearch v0.0.0
 	github.com/fatih/structs v1.1.0 // indirect

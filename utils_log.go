@@ -1,11 +1,9 @@
-package log
+package samh_common_lib
 
 import (
 	"fmt"
 	"os"
 	"time"
-
-	"github.com/ufwfqpdgv/samh_common_lib/utils/config"
 
 	"github.com/davecgh/go-spew/spew"
 	"go.uber.org/zap"
@@ -15,12 +13,12 @@ import (
 
 type Log struct {
 	*zap.Logger
-	Config config.Log_info
+	Config Log_info
 }
 
 var l *Log
 
-func Init(c config.Log_info) {
+func LogInit(c Log_info) {
 	hook := lumberjack.Logger{
 		Filename:   c.Path_filename, // 日志文件路径
 		MaxSize:    c.Max_size,      // 每个日志文件保存的最大尺寸 单位：M

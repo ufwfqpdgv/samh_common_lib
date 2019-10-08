@@ -1,4 +1,4 @@
-package base
+package samh_common_lib
 
 type SamhBaseRequest struct {
 	Uid        int64          `form:"uid" json:"uid" binding:"required"`

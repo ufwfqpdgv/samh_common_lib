@@ -1,4 +1,4 @@
-package config
+package samh_common_lib
 
 import (
 	"github.com/jinzhu/configor"
@@ -6,7 +6,7 @@ import (
 
 var _cfg *Config
 
-func Init(configFilePath string) {
+func ConfigInit(configFilePath string) {
 	_cfg = &Config{}
 	err := configor.Load(_cfg, configFilePath)
 	if err != nil {

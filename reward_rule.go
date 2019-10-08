@@ -1,4 +1,4 @@
-package common_modle
+package samh_common_lib
 
 type RewardRule struct {
 	Coin                int                   `json:"coin" xorm:"default 0 INT(11)"`
@@ -18,3 +18,11 @@ type RewardRule struct {
 	ReadingTicketNumber int                   `json:"reading_ticket_number" xorm:"not null default 0 comment('阅读券数量') TINYINT(4)"`
 	ReadingTicketType   ReadingTicketTypeCode `json:"reading_ticket_type" xorm:"not null default 0 comment('阅读券类型。0-无，即无此奖励；1-通用券；2-某个漫画的专属券') TINYINT(4)"`
 }
+
+type ReadingTicketTypeCode int
+
+const (
+	ReadingTicketTypeCode_None ReadingTicketTypeCode = iota
+	ReadingTicketTypeCode_Common
+	ReadingTicketTypeCode_Exclusive
+)

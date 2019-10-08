@@ -1,19 +1,14 @@
-package utils
+package samh_common_lib
 
 import (
 	// "fmt"
 	// "time"
 
-	"github.com/ufwfqpdgv/samh_common_lib/utils/config"
-	"github.com/ufwfqpdgv/samh_common_lib/utils/log"
-
-	"github.com/ufwfqpdgv/samh_common_lib/base"
-
 	"github.com/go-redis/redis"
 )
 
-func InitRedisClient(rc config.Redis) (client *redis.Client) {
-	log.Debug(base.NowFunc())
+func InitRedisClient(rc Redis) (client *redis.Client) {
+	Debug(NowFunc())
 
 	client = redis.NewClient(&redis.Options{
 		Network:    rc.Network,
@@ -24,14 +19,14 @@ func InitRedisClient(rc config.Redis) (client *redis.Client) {
 	})
 	err := client.Ping().Err()
 	if err != nil {
-		log.Panic(err)
+		Panic(err)
 	}
 
 	return
 }
 
-func InitRedisCluster(rc config.RedisCluster) (clusterClient *redis.ClusterClient) {
-	log.Debug(base.NowFunc())
+func InitRedisCluster(rc RedisCluster) (clusterClient *redis.ClusterClient) {
+	Debug(NowFunc())
 
 	clusterClient = redis.NewClusterClient(&redis.ClusterOptions{
 		Password:   rc.Password,
@@ -57,11 +52,11 @@ func InitRedisCluster(rc config.RedisCluster) (clusterClient *redis.ClusterClien
 	var err error
 	err = clusterClient.Ping().Err()
 	if err != nil {
-		log.Panic(err)
+		Panic(err)
 	}
 	err = clusterClient.ReloadState()
 	if err != nil {
-		log.Panic(err)
+		Panic(err)
 	}
 
 	return

@@ -1,21 +1,16 @@
-package utils
+package samh_common_lib
 
 import (
 	"net"
 	"net/http"
 	"time"
 
-	"github.com/ufwfqpdgv/samh_common_lib/utils/config"
-	"github.com/ufwfqpdgv/samh_common_lib/utils/log"
-
-	"github.com/ufwfqpdgv/samh_common_lib/base"
-
 	elasticsearch "github.com/elastic/go-elasticsearch"
 	"github.com/elastic/go-elasticsearch/esapi"
 )
 
-func InitEsClient(es config.ES) (client *elasticsearch.Client, err error) {
-	log.Debug(base.NowFunc())
+func InitEsClient(es ES) (client *elasticsearch.Client, err error) {
+	Debug(NowFunc())
 
 	for _, v := range es.Addr_arr_arr {
 		cfg := elasticsearch.Config{
@@ -35,14 +30,14 @@ func InitEsClient(es config.ES) (client *elasticsearch.Client, err error) {
 		}
 		client, err = elasticsearch.NewClient(cfg)
 		if err != nil {
-			log.Error(err)
+			Error(err)
 			continue
 		}
 
 		var res *esapi.Response
 		res, err = client.Ping()
 		if err != nil {
-			log.Error(err)
+			Error(err)
 			continue
 		}
 		defer res.Body.Close()
@@ -50,10 +45,10 @@ func InitEsClient(es config.ES) (client *elasticsearch.Client, err error) {
 			var e map[string]interface{}
 			err = Json.NewDecoder(res.Body).Decode(&e)
 			if err != nil {
-				log.Error(err)
+				Error(err)
 				continue
 			}
-			log.Errorf("[%v] %v: %v",
+			Errorf("[%v] %v: %v",
 				res.Status(),
 				e["error"].(map[string]interface{})["type"],
 				e["error"].(map[string]interface{})["reason"],

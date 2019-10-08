@@ -1,10 +1,8 @@
-package base
+package samh_common_lib
 
 import (
 	"net/http"
 	"runtime"
-
-	"github.com/ufwfqpdgv/samh_common_lib/utils/log"
 
 	"github.com/gin-gonic/gin"
 )
@@ -82,7 +80,7 @@ func RecoverFunc(c *gin.Context) {
 		buf := make([]byte, 4096)
 		n := runtime.Stack(buf, false)
 		// utils.CheckErrSendEmail(fmt.Errorf("recovery:%s\nstack:%s", rec, string(buf[:n])))
-		log.Panicf("recovery:%s\nstack:%s", rec, string(buf[:n]))
+		Panicf("recovery:%s\nstack:%s", rec, string(buf[:n]))
 	}
 }
 
