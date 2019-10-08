@@ -9,8 +9,9 @@ import (
 	"strings"
 	"time"
 
-	"samh_common_lib/base"
 	"samh_common_lib/utils/log"
+
+	"github.com/ufwfqpdgv/samh_common_lib/base"
 
 	resty "gopkg.in/resty.v1"
 )

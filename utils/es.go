@@ -5,9 +5,10 @@ import (
 	"net/http"
 	"time"
 
-	"samh_common_lib/base"
 	"samh_common_lib/utils/config"
 	"samh_common_lib/utils/log"
+
+	"github.com/ufwfqpdgv/samh_common_lib/base"
 
 	elasticsearch "github.com/elastic/go-elasticsearch"
 	"github.com/elastic/go-elasticsearch/esapi"

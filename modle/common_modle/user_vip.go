@@ -1,6 +1,6 @@
 package common_modle
 
-import "samh_common_lib/base"
+import "github.com/ufwfqpdgv/samh_common_lib/base"
 
 type UserVip struct {
 	UserVipId         int64                   `json:"user_vip_id" xorm:"not null pk autoincr BIGINT(20)"`

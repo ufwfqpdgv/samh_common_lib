@@ -5,9 +5,10 @@ import (
 	"os"
 	"time"
 
-	"samh_common_lib/base"
 	"samh_common_lib/utils/config"
 	"samh_common_lib/utils/log"
+
+	"github.com/ufwfqpdgv/samh_common_lib/base"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/xormplus/core"
