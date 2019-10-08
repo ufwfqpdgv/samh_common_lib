@@ -3,18 +3,21 @@ package utils
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"samh_common_lib/base"
 	"samh_common_lib/utils/config"
 	"samh_common_lib/utils/log"
 
-	// "github.com/davecgh/go-spew/spew"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/xormplus/core"
 	"github.com/xormplus/xorm"
 )
 
-func InitDB(cfg config.DB) (db *xorm.Engine) {
+func InitDB(cfg config.DB, outputlog bool) (db *xorm.Engine) {
 	log.Debug(base.NowFunc())
+	defer log.Debug(base.NowFunc() + " end")
+	log.Debugf("outputlog:%v", outputlog)
 
 	db = &xorm.Engine{}
 	var connectStr string
@@ -22,7 +25,7 @@ func InitDB(cfg config.DB) (db *xorm.Engine) {
 		connectStr = fmt.Sprintf("user id=%s;password=%s;server=%s;port%d;database=%s",
 			cfg.User, cfg.Password, cfg.Host, cfg.Port, cfg.Db_name)
 	} else {
-		connectStr = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8",
+		connectStr = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4",
 			cfg.User, cfg.Password, cfg.Host, cfg.Port, cfg.Db_name)
 	}
 
@@ -38,34 +41,41 @@ func InitDB(cfg config.DB) (db *xorm.Engine) {
 	}
 
 	db.SetMapper(core.GonicMapper{})
-	db.ShowSQL(true)
-	db.SetMaxIdleConns(cfg.Max_conns)
-	db.SetMaxOpenConns(cfg.Max_conns)
-
-	exist, err := pathExists(cfg.Log_path)
-	if err != nil {
-		log.Panic(err)
-	}
-	if !exist {
-		err = os.Mkdir(cfg.Log_path, os.ModePerm)
-		if err != nil {
-			log.Panic(err)
-		}
-	}
-	pathFileName := cfg.Log_path + cfg.Log_name
-	file, err := os.Open(pathFileName)
-	if err != nil && os.IsNotExist(err) {
-		file, err = os.Create(pathFileName)
-		if err != nil {
-			log.Panic(err)
-		}
+	if outputlog {
+		db.ShowSQL(true)
 	} else {
-		file, err = os.OpenFile(pathFileName, os.O_WRONLY|os.O_APPEND, 0666)
+		db.ShowSQL(false)
+	}
+	db.SetMaxIdleConns(cfg.Max_idle_conns)
+	db.SetMaxOpenConns(cfg.Max_conns)
+	db.SetConnMaxLifetime(time.Duration(cfg.Conn_max_lifetime) * time.Second) //这个参数好像更不释放 socket，在大并发的时候会疯狂暴涨--网上文章，使用DB.SetConnMaxLifetime(time.Second)设置连接最大复用时间，3~10秒即可。orm基本上都有相关的设置
+
+	if outputlog {
+		exist, err := pathExists(cfg.Log_path)
 		if err != nil {
 			log.Panic(err)
 		}
+		if !exist {
+			err = os.Mkdir(cfg.Log_path, os.ModePerm)
+			if err != nil {
+				log.Panic(err)
+			}
+		}
+		pathFileName := cfg.Log_path + cfg.Log_name
+		file, err := os.Open(pathFileName)
+		if err != nil && os.IsNotExist(err) {
+			file, err = os.Create(pathFileName)
+			if err != nil {
+				log.Panic(err)
+			}
+		} else {
+			file, err = os.OpenFile(pathFileName, os.O_WRONLY|os.O_APPEND, 0666)
+			if err != nil {
+				log.Panic(err)
+			}
+		}
+		db.SetLogger(xorm.NewSimpleLogger(file))
 	}
-	db.SetLogger(xorm.NewSimpleLogger(file))
 
 	return
 }
