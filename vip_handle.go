@@ -1,8 +1,10 @@
 package samh_common_lib
 
+import "github.com/ufwfqpdgv/utils"
+
 func Init(urlRq string, timeOutRq int) {
 	var err error
-	url, timeOut, err = CheckUrlTimeout(urlRq, timeOutRq)
+	url, timeOut, err = utils.CheckUrlTimeout(urlRq, timeOutRq)
 	if err != nil {
 		Panic(err)
 	}

@@ -5,6 +5,7 @@ import (
 	"runtime"
 
 	"github.com/gin-gonic/gin"
+	"github.com/ufwfqpdgv/log"
 )
 
 func SendResponse(c *gin.Context, retCode SamhResponseCode, rsp interface{}) {
@@ -80,7 +81,7 @@ func RecoverFunc(c *gin.Context) {
 		buf := make([]byte, 4096)
 		n := runtime.Stack(buf, false)
 		// utils.CheckErrSendEmail(fmt.Errorf("recovery:%s\nstack:%s", rec, string(buf[:n])))
-		Panicf("recovery:%s\nstack:%s", rec, string(buf[:n]))
+		log.Panicf("recovery:%s\nstack:%s", rec, string(buf[:n]))
 	}
 }
 
