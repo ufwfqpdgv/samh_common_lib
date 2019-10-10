@@ -1,23 +1,26 @@
 package samh_common_lib
 
-import "github.com/ufwfqpdgv/utils"
+import (
+	"github.com/ufwfqpdgv/log"
+	"github.com/ufwfqpdgv/utils"
+)
 
 func Init(urlRq string, timeOutRq int) {
 	var err error
 	url, timeOut, err = utils.CheckUrlTimeout(urlRq, timeOutRq)
 	if err != nil {
-		Panic(err)
+		log.Panic(err)
 	}
 	err = CheckServerConnect(urlRq)
 	if err != nil {
 		// Panic(err) // 不能用Panic，如整个服务器重启，那互相依赖的服务谁也启动不了
-		Error(err)
+		log.Error(err)
 	}
 }
 
 func InitUser(rq *InternalInitRequest) (rsp *InternalInitResponse, retCode SamhResponseCode) {
-	Debug(NowFunc())
-	defer Debug(NowFunc() + " end")
+	log.Debug(NowFunc())
+	defer log.Debug(NowFunc() + " end")
 
 	retCode = SamhResponseCode_Succ
 	rsp = &InternalInitResponse{}
@@ -31,11 +34,11 @@ func InitUser(rq *InternalInitRequest) (rsp *InternalInitResponse, retCode SamhR
 	addr := url + "/internal/api/v1/vip/init"
 	retCode = HttpGet(addr, rq, rsp2, timeOut, nil, 3)
 	if retCode != SamhResponseCode_Succ {
-		Error(NowFuncError())
+		log.Error(NowFunclog.Error())
 		return
 	}
 	if rsp2.Code != SamhResponseCode_Succ {
-		Error(NowFuncError())
+		log.Error(NowFunclog.Error())
 		retCode = rsp2.Code
 		return
 	}
@@ -45,8 +48,8 @@ func InitUser(rq *InternalInitRequest) (rsp *InternalInitResponse, retCode SamhR
 }
 
 func FetchUserPrivilegeInfo(rq *InternalUserPrivilegeInfoRequest) (rsp *InternalUserPrivilegeInfoResponse, retCode SamhResponseCode) {
-	Debug(NowFunc())
-	defer Debug(NowFunc() + " end")
+	log.Debug(NowFunc())
+	defer log.Debug(NowFunc() + " end")
 
 	retCode = SamhResponseCode_Succ
 	rsp = &InternalUserPrivilegeInfoResponse{}
@@ -60,11 +63,11 @@ func FetchUserPrivilegeInfo(rq *InternalUserPrivilegeInfoRequest) (rsp *Internal
 	addr := url + "/internal/api/v1/vip/user_privilege_info"
 	retCode = HttpGet(addr, rq, rsp2, timeOut, nil, 3)
 	if retCode != SamhResponseCode_Succ {
-		Error(NowFuncError())
+		log.Error(NowFunclog.Error())
 		return
 	}
 	if rsp2.Code != SamhResponseCode_Succ {
-		Error(NowFuncError())
+		log.Error(NowFunclog.Error())
 		retCode = rsp2.Code
 		return
 	}
@@ -74,8 +77,8 @@ func FetchUserPrivilegeInfo(rq *InternalUserPrivilegeInfoRequest) (rsp *Internal
 }
 
 func VipReward(rq *VipRewardRequest) (rsp *VipRewardResponse, retCode SamhResponseCode) {
-	Debug(NowFunc())
-	defer Debug(NowFunc() + " end")
+	log.Debug(NowFunc())
+	defer log.Debug(NowFunc() + " end")
 
 	retCode = SamhResponseCode_Succ
 	rsp = &VipRewardResponse{}
@@ -89,11 +92,11 @@ func VipReward(rq *VipRewardRequest) (rsp *VipRewardResponse, retCode SamhRespon
 	addr := url + "/internal/api/v1/vip/reward"
 	retCode = HttpPost(addr, rq, rsp2, timeOut, nil, 3)
 	if retCode != SamhResponseCode_Succ {
-		Error(NowFuncError())
+		log.Error(NowFunclog.Error())
 		return
 	}
 	if rsp2.Code != SamhResponseCode_Succ {
-		Error(NowFuncError())
+		log.Error(NowFunclog.Error())
 		retCode = rsp2.Code
 		return
 	}
@@ -103,8 +106,8 @@ func VipReward(rq *VipRewardRequest) (rsp *VipRewardResponse, retCode SamhRespon
 }
 
 func InternalRechargeApi(rq *InternalRechargeRequest) (rsp *InternalRechargeResponse, retCode SamhResponseCode) {
-	Debug(NowFunc())
-	defer Debug(NowFunc() + " end")
+	log.Debug(NowFunc())
+	defer log.Debug(NowFunc() + " end")
 
 	retCode = SamhResponseCode_Succ
 	rsp = &InternalRechargeResponse{}
@@ -118,11 +121,11 @@ func InternalRechargeApi(rq *InternalRechargeRequest) (rsp *InternalRechargeResp
 	addr := url + "/internal/api/v1/vip/recharge"
 	retCode = HttpPost(addr, rq, rsp2, timeOut, nil, 3)
 	if retCode != SamhResponseCode_Succ {
-		Error(NowFuncError())
+		log.Error(NowFunclog.Error())
 		return
 	}
 	if rsp2.Code != SamhResponseCode_Succ {
-		Error(NowFuncError())
+		log.Error(NowFunclog.Error())
 		retCode = rsp2.Code
 		return
 	}
@@ -132,8 +135,8 @@ func InternalRechargeApi(rq *InternalRechargeRequest) (rsp *InternalRechargeResp
 }
 
 func InternalOperationApi(rq *InternalOperationRequest) (rsp *InternalOperationResponse, retCode SamhResponseCode) {
-	Debug(NowFunc())
-	defer Debug(NowFunc() + " end")
+	log.Debug(NowFunc())
+	defer log.Debug(NowFunc() + " end")
 
 	retCode = SamhResponseCode_Succ
 	rsp = &InternalOperationResponse{}
@@ -147,11 +150,11 @@ func InternalOperationApi(rq *InternalOperationRequest) (rsp *InternalOperationR
 	addr := url + "/internal/api/v1/vip/operation"
 	retCode = HttpPost(addr, rq, rsp2, timeOut, nil, 3)
 	if retCode != SamhResponseCode_Succ {
-		Error(NowFuncError())
+		log.Error(NowFunclog.Error())
 		return
 	}
 	if rsp2.Code != SamhResponseCode_Succ {
-		Error(NowFuncError())
+		log.Error(NowFunclog.Error())
 		retCode = rsp2.Code
 		return
 	}
@@ -161,8 +164,8 @@ func InternalOperationApi(rq *InternalOperationRequest) (rsp *InternalOperationR
 }
 
 func InternalAllInfoApi(rq *InternalAllInfoRequest) (rsp *InternalAllInfoResponse, retCode SamhResponseCode) {
-	Debug(NowFunc())
-	defer Debug(NowFunc() + " end")
+	log.Debug(NowFunc())
+	defer log.Debug(NowFunc() + " end")
 
 	retCode = SamhResponseCode_Succ
 	rsp = &InternalAllInfoResponse{}
@@ -176,11 +179,11 @@ func InternalAllInfoApi(rq *InternalAllInfoRequest) (rsp *InternalAllInfoRespons
 	addr := url + "/internal/api/v1/vip/all_info"
 	retCode = HttpGet(addr, rq, rsp2, timeOut, nil, 3)
 	if retCode != SamhResponseCode_Succ {
-		Error(NowFuncError())
+		log.Error(NowFunclog.Error())
 		return
 	}
 	if rsp2.Code != SamhResponseCode_Succ {
-		Error(NowFuncError())
+		log.Error(NowFunclog.Error())
 		retCode = rsp2.Code
 		return
 	}
@@ -201,8 +204,8 @@ func DefaultInternalAllInfoResponse() (rsp *InternalAllInfoResponse) {
 }
 
 func InternalBatchAllInfoApi(rq *InternalBatchAllInfoRequest) (rsp *InternalBatchAllInfoResponse, retCode SamhResponseCode) {
-	Debug(NowFunc())
-	defer Debug(NowFunc() + " end")
+	log.Debug(NowFunc())
+	defer log.Debug(NowFunc() + " end")
 
 	retCode = SamhResponseCode_Succ
 	rsp = &InternalBatchAllInfoResponse{}
@@ -216,11 +219,11 @@ func InternalBatchAllInfoApi(rq *InternalBatchAllInfoRequest) (rsp *InternalBatc
 	addr := url + "/internal/api/v1/vip/batch_all_info"
 	retCode = HttpGet(addr, rq, rsp2, timeOut, nil, 3)
 	if retCode != SamhResponseCode_Succ {
-		Error(NowFuncError())
+		log.Error(NowFunclog.Error())
 		return
 	}
 	if rsp2.Code != SamhResponseCode_Succ {
-		Error(NowFuncError())
+		log.Error(NowFunclog.Error())
 		retCode = rsp2.Code
 		return
 	}
@@ -230,8 +233,8 @@ func InternalBatchAllInfoApi(rq *InternalBatchAllInfoRequest) (rsp *InternalBatc
 }
 
 func InternalIsRechargedEffectiveVipApi(rq *InternalIsRechargedEffectiveVipRequest) (rsp *InternalIsRechargedEffectiveVipResponse, retCode SamhResponseCode) {
-	Debug(NowFunc())
-	defer Debug(NowFunc() + " end")
+	log.Debug(NowFunc())
+	defer log.Debug(NowFunc() + " end")
 
 	retCode = SamhResponseCode_Succ
 	rsp = &InternalIsRechargedEffectiveVipResponse{}
@@ -245,11 +248,11 @@ func InternalIsRechargedEffectiveVipApi(rq *InternalIsRechargedEffectiveVipReque
 	addr := url + "/internal/api/v1/vip/is_recharged_effective_vip"
 	retCode = HttpGet(addr, rq, rsp2, timeOut, nil, 3)
 	if retCode != SamhResponseCode_Succ {
-		Error(NowFuncError())
+		log.Error(NowFunclog.Error())
 		return
 	}
 	if rsp2.Code != SamhResponseCode_Succ {
-		Error(NowFuncError())
+		log.Error(NowFunclog.Error())
 		retCode = rsp2.Code
 		return
 	}
@@ -259,8 +262,8 @@ func InternalIsRechargedEffectiveVipApi(rq *InternalIsRechargedEffectiveVipReque
 }
 
 func InternalUserPrivilegeInfoApi(rq *InternalUserPrivilegeInfoRequest) (rsp *InternalUserPrivilegeInfoResponse, retCode SamhResponseCode) {
-	Debug(NowFunc())
-	defer Debug(NowFunc() + " end")
+	log.Debug(NowFunc())
+	defer log.Debug(NowFunc() + " end")
 
 	retCode = SamhResponseCode_Succ
 	rsp = &InternalUserPrivilegeInfoResponse{}
@@ -274,11 +277,11 @@ func InternalUserPrivilegeInfoApi(rq *InternalUserPrivilegeInfoRequest) (rsp *In
 	addr := url + "/internal/api/v1/vip/user_privilege_info"
 	retCode = HttpGet(addr, rq, rsp2, timeOut, nil, 3)
 	if retCode != SamhResponseCode_Succ {
-		Error(NowFuncError())
+		log.Error(NowFunclog.Error())
 		return
 	}
 	if rsp2.Code != SamhResponseCode_Succ {
-		Error(NowFuncError())
+		log.Error(NowFunclog.Error())
 		retCode = rsp2.Code
 		return
 	}

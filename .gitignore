@@ -18,3 +18,5 @@ vendor
 
 #others
 Session.vim
+
+go.sum
